@@ -15,3 +15,5 @@ a function with that name containing checks for wether or not that function exis
 
 state.set("statename")
 will then handle the rest.
+
+you can also add more vars to this, it will look for a .init function and call it with varargs
