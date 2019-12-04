@@ -35,8 +35,9 @@ function state.load(filePath,name)
   States[name or filePath] = require(filePath)
 end
 
-function state.set(name)
+function state.set(name,...)
   if States[name] then
+    if States[name].init then States[name].init(...) end
     state.active = name
   end
 end
