@@ -2,20 +2,14 @@ local meta={}
 local state = setmetatable({},meta)
 local States = {}
 
-local function createCallback(v)
-  return function(...)
-    if States[state.active] and States[state.active][v] then 
-      States[state.active][v](...)
-    end
-  end
-end
-
+local function empty() end
 function meta:__index(key)
-  self[key] = createCallback(key)
-  return self[key]
+  if States[self.active] and States[self.active][key] then 
+    return States[self.active][key]
+  end
+  return empty
 end
 
---alternatively manually require the scene to the States table
 function state.load(filePath,name)
   local err
   err,States[name or filePath] = pcall(require,filePath)
@@ -29,8 +23,9 @@ function state.set(name,...)
   end
 end
 
-function state.getStates()
-  return States
+function state.getStates() 
+  return States 
 end
 
 return state
+
