@@ -11,7 +11,5 @@ or buy adding a require in the State table.
 the module will call State[state.active][key] whenever you attempt to call state.key
 if your state has no function at key , it will call an empty function instead to avoid erroring
 
-state.set("statename")
+state.set("statename",...)
 will then handle the rest.
-
-you can also add more vars to this, it will look for a .init function and call it with varargs
