@@ -3,15 +3,14 @@ handles love gamestates
 You simply have to call 
 require("states")
 
-the gamestates can be loaded by state.load("filepath")
+the gamestates can be loaded by state.load("filepath",(name))
 or buy adding a require in the State table.
 
-youll need to add
-state.draw(),update,mousepressed.. to your love functions manually.
+the module creates functions, wich check for and calls functions in your created state,
+whenever you call that function for the first time
 
-if you need a callback i forgot or you just want more, just add its name as a string to the functions table.
-a function with that name containing checks for wether or not that function exists in the current state will be auto generated for you
-
+so if you call state.draw() for the first time, a function will be created that calls
+State.activestate.draw()
 
 state.set("statename")
 will then handle the rest.
