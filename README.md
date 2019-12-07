@@ -8,11 +8,8 @@ require("states")
 the gamestates can be loaded by state.load("filepath",(name))
 or buy adding a require in the State table.
 
-the module creates functions, wich check for and calls functions in your created state,
-whenever you call that function for the first time
-
-so if you call state.draw() for the first time, a function will be created that calls
-State.activestate.draw()
+the module will call State[state.active][key] whenever you attempt to call state.key
+if your state has no function at key , it will call an empty function instead to avoid erroring
 
 state.set("statename")
 will then handle the rest.
