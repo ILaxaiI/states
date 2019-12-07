@@ -1,5 +1,5 @@
 local meta={}
-local state = setmetatable({},meta)
+local state = setmetatable({active = ""},meta)
 local States = {}
 
 local function empty() end
@@ -17,6 +17,7 @@ function state.load(filePath,name)
 end
 
 function state.set(name,...)
+  state.exit()
   if States[name] or state.load(name) then
     if States[name].init then States[name].init(...) end
     state.active = name
