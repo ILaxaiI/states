@@ -1,32 +1,16 @@
-local meta={}
-local state = setmetatable({active = ""},meta)
-local States = {}
-
 local function empty() end
-function meta:__index(key)
-  if States[self.active] and States[self.active][key] then 
-    return States[self.active][key]
-  end
-  return empty
+local state = {active = "",list = {}}
+
+function state.load(filePath,name) 
+  if state.list[name or filePath] then io.write('Warning, overriding State Module "'..name..'"\n'..debug.traceback().."\n\n") end
+  state.list[name or filePath] = require(filePath:gsub("/","."))
+  if type(state.list[name or filePath]) == "boolean" then error("No Module returned in "..filePath.."\n") end
+end 
+
+function state.set(name,exit_vars,...)
+  state.exit(exit_vars)
+  state.active = state.list[name] and name
+  state.init(...)
 end
 
-function state.load(filePath,name)
-  local err
-  err,States[name or filePath] = pcall(require,filePath)
-  return err
-end
-
-function state.set(name,...)
-  state.exit()
-  if States[name] or state.load(name) then
-    if States[name].init then States[name].init(...) end
-    state.active = name
-  end
-end
-
-function state.getStates() 
-  return States 
-end
-
-return state
-
+return setmetatable(state,{ __index = function(self,key) return self.list[self.active] and self.list[self.active][key] or empty end })
