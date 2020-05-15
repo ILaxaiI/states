@@ -13,6 +13,7 @@ state.set("statename",<last state exit vars>,...)
 will then handle the rest.
 
 # states_large
+Löve only
 
 the only difference to the other version is:
 state.load takes a path to a folder instead. every .lua file in that and its subdirectories will be loaded.
