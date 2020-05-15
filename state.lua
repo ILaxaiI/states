@@ -2,9 +2,10 @@ local function empty() end
 local state = {active = "",list = {}}
 
 function state.load(filePath,name) 
-  if state.list[name or filePath] then io.write('Warning, overriding State Module "'..name..'"\n'..debug.traceback().."\n\n") end
-  state.list[name or filePath] = require(filePath:gsub("/","."))
-  if type(state.list[name or filePath]) == "boolean" then error("No Module returned in "..filePath.."\n") end
+  name = name or filePath
+  if state.list[name] then io.write('Warning, overriding State Module "'..name..'"\n'..debug.traceback().."\n\n") end
+  state.list[name] = require(filePath:gsub("/","."))
+  if type(state.list[name]) == "boolean" then error("No Module returned in "..filePath.."\n") end
 end 
 
 function state.set(name,exit_vars,...)
